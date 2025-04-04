@@ -29,7 +29,7 @@ type AlertingConfiguration struct {
 	timeIntervals         []alertingNotify.TimeInterval
 	templates             []alertingTemplates.TemplateDefinition
 	rawAlertmanagerConfig []byte
-	configHash            [16]byte
+	configHash            [32]byte
 
 	receivers                []*alertingNotify.APIReceiver
 	receiverIntegrationsFunc func(r *alertingNotify.APIReceiver, tmpl *alertingTemplates.Template) ([]*alertingNotify.Integration, error)
@@ -69,7 +69,7 @@ func (a AlertingConfiguration) Templates() []alertingTemplates.TemplateDefinitio
 	return a.templates
 }
 
-func (a AlertingConfiguration) Hash() [16]byte {
+func (a AlertingConfiguration) Hash() [32]byte {
 	return a.configHash
 }
 

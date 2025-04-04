@@ -455,7 +455,7 @@ func (n nilLimits) MaxNumberOfAggregationGroups() int { return 0 }
 
 // This function is taken from upstream, modified to take a [16]byte instead of a []byte.
 // https://github.com/prometheus/alertmanager/blob/30fa9cd44bc91c0d6adcc9985609bb08a09a127b/config/coordinator.go#L149-L156
-func hashAsMetricValue(data [16]byte) float64 {
+func hashAsMetricValue(data [32]byte) float64 {
 	// We only want 48 bits as a float64 only has a 53 bit mantissa.
 	smallSum := data[0:6]
 	bytes := make([]byte, 8)
