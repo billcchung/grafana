@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	alertingImages "github.com/grafana/alerting/images"
-	alertingModels "github.com/grafana/alerting/models"
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingImages "github.com/billcchung/alerting/images"
+	alertingModels "github.com/billcchung/alerting/models"
+	alertingNotify "github.com/billcchung/alerting/notify"
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 

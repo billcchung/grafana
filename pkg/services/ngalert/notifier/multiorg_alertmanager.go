@@ -9,12 +9,12 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 
-	alertingCluster "github.com/grafana/alerting/cluster"
+	alertingCluster "github.com/billcchung/alerting/cluster"
 
 	"github.com/grafana/grafana/pkg/apimachinery/errutil"
 	ac "github.com/grafana/grafana/pkg/services/accesscontrol"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"github.com/grafana/grafana/pkg/infra/kvstore"
 	"github.com/grafana/grafana/pkg/infra/log"

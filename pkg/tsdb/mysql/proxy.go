@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 	"net"
 
@@ -21,7 +21,7 @@ func registerProxyDialerContext(protocol, cnnstr string, dialer proxy.Dialer) (s
 
 	// the dialer context can be updated everytime the datasource is updated
 	// have a unique network per connection string
-	hash := fmt.Sprintf("%x", md5.Sum([]byte(cnnstr)))
+	hash := fmt.Sprintf("%x", sha256.Sum256([]byte(cnnstr)))
 	network := "proxy-" + hash
 	mysql.RegisterDialContext(network, mysqlDialer.DialContext)
 

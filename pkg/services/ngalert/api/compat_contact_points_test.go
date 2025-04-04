@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/billcchung/alerting/notify"
+	receiversTesting "github.com/billcchung/alerting/receivers/testing"
 	"github.com/google/go-cmp/cmp"
-	"github.com/grafana/alerting/notify"
-	receiversTesting "github.com/grafana/alerting/receivers/testing"
 	"github.com/stretchr/testify/require"
 
 	apicompat "github.com/grafana/grafana/pkg/services/ngalert/api/compat"

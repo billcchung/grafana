@@ -5,7 +5,7 @@ package alertmanager_mock
 import (
 	context "context"
 
-	alertingmodels "github.com/grafana/alerting/models"
+	alertingmodels "github.com/billcchung/alerting/models"
 
 	definitions "github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"
 
@@ -13,7 +13,7 @@ import (
 
 	models "github.com/grafana/grafana/pkg/services/ngalert/models"
 
-	notify "github.com/grafana/alerting/notify"
+	notify "github.com/billcchung/alerting/notify"
 
 	v2models "github.com/prometheus/alertmanager/api/v2/models"
 )

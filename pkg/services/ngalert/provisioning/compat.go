@@ -3,7 +3,7 @@ package provisioning
 import (
 	"strings"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"github.com/grafana/grafana/pkg/components/simplejson"
 	"github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"

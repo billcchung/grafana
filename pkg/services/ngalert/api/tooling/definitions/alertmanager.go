@@ -12,8 +12,8 @@ import (
 	"github.com/prometheus/common/model"
 	"gopkg.in/yaml.v3"
 
-	"github.com/grafana/alerting/definition"
-	alertingmodels "github.com/grafana/alerting/models"
+	"github.com/billcchung/alerting/definition"
+	alertingmodels "github.com/billcchung/alerting/models"
 )
 
 // swagger:route POST /alertmanager/grafana/config/api/v1/alerts alertmanager RoutePostGrafanaAlertingConfig

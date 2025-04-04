@@ -3,7 +3,7 @@ package resource
 import (
 	"bytes"
 	context "context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"mime"
@@ -168,7 +168,7 @@ func (s *cdkBlobSupport) PutResourceBlob(ctx context.Context, req *PutBlobReques
 
 	// Set the MD5 hash if missing
 	if len(attrs.MD5) == 0 {
-		h := md5.New()
+		h := sha256.New()
 		_, _ = h.Write(req.Value)
 		attrs.MD5 = h.Sum(nil)
 	}

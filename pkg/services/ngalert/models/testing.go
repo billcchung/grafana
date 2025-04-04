@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
+	alertingNotify "github.com/billcchung/alerting/notify"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	alertingNotify "github.com/grafana/alerting/notify"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	amv2 "github.com/prometheus/alertmanager/api/v2/models"
 	"github.com/prometheus/alertmanager/pkg/labels"
@@ -20,7 +20,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/exp/maps"
 
-	alertingModels "github.com/grafana/alerting/models"
+	alertingModels "github.com/billcchung/alerting/models"
 
 	"github.com/grafana/grafana/pkg/expr"
 	"github.com/grafana/grafana/pkg/services/datasources"

@@ -14,7 +14,7 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 
-	alertingModels "github.com/grafana/alerting/models"
+	alertingModels "github.com/billcchung/alerting/models"
 
 	"github.com/grafana/grafana/pkg/services/ngalert/eval"
 	ngModels "github.com/grafana/grafana/pkg/services/ngalert/models"

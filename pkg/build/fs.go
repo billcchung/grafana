@@ -1,7 +1,6 @@
 package build
 
 import (
-	"crypto/md5"
 	"crypto/sha256"
 	"fmt"
 	"io"
@@ -73,7 +72,7 @@ func md5File(file string) error {
 	}
 	defer logAndClose(fd)
 
-	h := md5.New()
+	h := sha256.New()
 	_, err = io.Copy(h, fd)
 	if err != nil {
 		return err
@@ -81,7 +80,7 @@ func md5File(file string) error {
 
 	// Ignore gosec G304 as this function is only used in the build process.
 	//nolint:gosec
-	out, err := os.Create(file + ".md5")
+	out, err := os.Create(file + ".sha")
 	if err != nil {
 		return err
 	}

@@ -13,7 +13,7 @@ import (
 	"github.com/prometheus/alertmanager/api/v2/models"
 	"github.com/prometheus/common/model"
 
-	alertingModels "github.com/grafana/alerting/models"
+	alertingModels "github.com/billcchung/alerting/models"
 
 	apimodels "github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"
 	"github.com/grafana/grafana/pkg/services/ngalert/eval"

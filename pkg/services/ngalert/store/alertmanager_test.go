@@ -2,7 +2,7 @@ package store
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 	"sort"
 	"testing"
@@ -109,7 +109,7 @@ func TestIntegrationAlertmanagerStore(t *testing.T) {
 
 	t.Run("UpdateAlertmanagerConfiguration returns error if existing config does not exist", func(t *testing.T) {
 		cmd := buildSaveConfigCmd(t, "my-config", 1234)
-		cmd.FetchedConfigurationHash = fmt.Sprintf("%x", md5.Sum([]byte("my-config")))
+		cmd.FetchedConfigurationHash = fmt.Sprintf("%x", sha256.Sum256([]byte("my-config")))
 		err := store.UpdateAlertmanagerConfiguration(context.Background(), &cmd)
 
 		require.ErrorIs(t, err, ErrVersionLockedObjectNotFound)
@@ -133,7 +133,7 @@ func TestIntegrationAlertmanagerStore(t *testing.T) {
 	})
 	t.Run("UpdateAlertmanagerConfiguration fails if the config doesn't exist and the hashes in the cmd match", func(t *testing.T) {
 		configRaw := "my-non-existent-config"
-		configHash := fmt.Sprintf("%x", md5.Sum([]byte(configRaw)))
+		configHash := fmt.Sprintf("%x", sha256.Sum256([]byte(configRaw)))
 		cmd := buildSaveConfigCmd(t, configRaw, 1)
 		cmd.FetchedConfigurationHash = configHash
 		err := store.UpdateAlertmanagerConfiguration(context.Background(), &cmd)
@@ -157,7 +157,7 @@ func TestIntegrationAlertmanagerHash(t *testing.T) {
 		config, err := store.GetLatestAlertmanagerConfiguration(context.Background(), 1)
 		require.NoError(t, err)
 		require.Equal(t, configMD5, config.ConfigurationHash)
-		newConfig, newConfigMD5 := "my-config-new", fmt.Sprintf("%x", md5.Sum([]byte("my-config-new")))
+		newConfig, newConfigMD5 := "my-config-new", fmt.Sprintf("%x", sha256.Sum256([]byte("my-config-new")))
 		err = store.UpdateAlertmanagerConfiguration(context.Background(), &models.SaveAlertmanagerConfigurationCmd{
 			AlertmanagerConfiguration: newConfig,
 			FetchedConfigurationHash:  configMD5,
@@ -490,7 +490,7 @@ func setupConfig(t *testing.T, config string, store *DBstore) (string, string) {
 
 func setupConfigInOrg(t *testing.T, config string, org int64, store *DBstore) (string, string) {
 	t.Helper()
-	config, configMD5 := config, fmt.Sprintf("%x", md5.Sum([]byte(config)))
+	config, configMD5 := config, fmt.Sprintf("%x", sha256.Sum256([]byte(config)))
 	cmd := buildSaveConfigCmd(t, config, org)
 	err := store.SaveAlertmanagerConfiguration(context.Background(), &cmd)
 	require.NoError(t, err)

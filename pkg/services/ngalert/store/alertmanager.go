@@ -2,7 +2,7 @@ package store
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 	"time"
 
@@ -71,7 +71,7 @@ func (st DBstore) SaveAlertmanagerConfigurationWithCallback(ctx context.Context,
 	return st.SQLStore.WithTransactionalDbSession(ctx, func(sess *db.Session) error {
 		config := models.AlertConfiguration{
 			AlertmanagerConfiguration: cmd.AlertmanagerConfiguration,
-			ConfigurationHash:         fmt.Sprintf("%x", md5.Sum([]byte(cmd.AlertmanagerConfiguration))),
+			ConfigurationHash:         fmt.Sprintf("%x", sha256.Sum256([]byte(cmd.AlertmanagerConfiguration))),
 			ConfigurationVersion:      cmd.ConfigurationVersion,
 			Default:                   cmd.Default,
 			OrgID:                     cmd.OrgID,
@@ -110,7 +110,7 @@ func (st DBstore) SaveAlertmanagerConfigurationWithCallback(ctx context.Context,
 // UpdateAlertmanagerConfiguration replaces an alertmanager configuration with optimistic locking. It assumes that an existing revision of the configuration exists in the store, and will return an error otherwise.
 func (st *DBstore) UpdateAlertmanagerConfiguration(ctx context.Context, cmd *models.SaveAlertmanagerConfigurationCmd) error {
 	return st.SQLStore.WithTransactionalDbSession(ctx, func(sess *db.Session) error {
-		newConfigHash := fmt.Sprintf("%x", md5.Sum([]byte(cmd.AlertmanagerConfiguration)))
+		newConfigHash := fmt.Sprintf("%x", sha256.Sum256([]byte(cmd.AlertmanagerConfiguration)))
 		// check for no-op update
 		if newConfigHash == cmd.FetchedConfigurationHash {
 			// double check that the configuration with this hash is in the db

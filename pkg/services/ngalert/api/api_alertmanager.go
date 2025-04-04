@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"github.com/grafana/grafana/pkg/api/response"
 	"github.com/grafana/grafana/pkg/apimachinery/identity"

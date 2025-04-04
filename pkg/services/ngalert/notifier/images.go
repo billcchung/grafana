@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	alertingImages "github.com/grafana/alerting/images"
+	alertingImages "github.com/billcchung/alerting/images"
 
 	"github.com/grafana/grafana/pkg/infra/log"
 	"github.com/grafana/grafana/pkg/services/ngalert/models"

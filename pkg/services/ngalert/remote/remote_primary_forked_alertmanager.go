@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"github.com/grafana/grafana/pkg/infra/log"
 	apimodels "github.com/grafana/grafana/pkg/services/ngalert/api/tooling/definitions"

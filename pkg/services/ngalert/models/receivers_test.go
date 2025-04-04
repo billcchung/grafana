@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 

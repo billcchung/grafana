@@ -10,7 +10,7 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend/gtime"
 	"gopkg.in/ini.v1"
 
-	alertingCluster "github.com/grafana/alerting/cluster"
+	alertingCluster "github.com/billcchung/alerting/cluster"
 
 	"github.com/grafana/grafana/pkg/util"
 )

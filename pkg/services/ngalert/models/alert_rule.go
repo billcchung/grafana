@@ -20,7 +20,7 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	prommodels "github.com/prometheus/common/model"
 
-	alertingModels "github.com/grafana/alerting/models"
+	alertingModels "github.com/billcchung/alerting/models"
 
 	"github.com/grafana/grafana/pkg/services/folder"
 	"github.com/grafana/grafana/pkg/services/quota"

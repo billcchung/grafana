@@ -11,7 +11,7 @@ import (
 	"github.com/benbjohnson/clock"
 	amv2 "github.com/prometheus/alertmanager/api/v2/models"
 
-	"github.com/grafana/alerting/models"
+	"github.com/billcchung/alerting/models"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"

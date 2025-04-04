@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	alertingModels "github.com/grafana/alerting/models"
+	alertingModels "github.com/billcchung/alerting/models"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	prometheusModel "github.com/prometheus/common/model"
 

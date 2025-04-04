@@ -2,7 +2,7 @@ package remote
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -20,9 +20,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/require"
 
-	"github.com/grafana/alerting/definition"
-	alertingModels "github.com/grafana/alerting/models"
-	"github.com/grafana/alerting/notify"
+	"github.com/billcchung/alerting/definition"
+	alertingModels "github.com/billcchung/alerting/models"
+	"github.com/billcchung/alerting/notify"
 	"gopkg.in/yaml.v3"
 
 	"github.com/grafana/grafana/pkg/infra/db"
@@ -442,11 +442,11 @@ func Test_isDefaultConfiguration(t *testing.T) {
 		t.Run(test.name, func(tt *testing.T) {
 			am := &Alertmanager{
 				defaultConfig:     string(rawDefaultCfg),
-				defaultConfigHash: fmt.Sprintf("%x", md5.Sum(rawDefaultCfg)),
+				defaultConfigHash: fmt.Sprintf("%x", sha256.Sum256(rawDefaultCfg)),
 			}
 			raw, err := json.Marshal(test.config)
 			require.NoError(tt, err)
-			isDefault, _ := am.isDefaultConfiguration(md5.Sum(raw))
+			isDefault, _ := am.isDefaultConfiguration(sha256.Sum256(raw))
 			require.Equal(tt, test.expected, isDefault)
 		})
 	}
@@ -473,7 +473,7 @@ func TestIntegrationRemoteAlertmanagerConfiguration(t *testing.T) {
 		DefaultConfig:     defaultGrafanaConfig,
 	}
 
-	testConfigHash := fmt.Sprintf("%x", md5.Sum([]byte(testGrafanaConfig)))
+	testConfigHash := fmt.Sprintf("%x", sha256.Sum256([]byte(testGrafanaConfig)))
 	testConfigCreatedAt := time.Now().Unix()
 	testConfig := &ngmodels.AlertConfiguration{
 		AlertmanagerConfiguration: testGrafanaConfig,
@@ -586,7 +586,7 @@ func TestIntegrationRemoteAlertmanagerConfiguration(t *testing.T) {
 		require.NoError(t, err)
 
 		require.JSONEq(t, testGrafanaConfigWithSecret, string(got))
-		require.Equal(t, fmt.Sprintf("%x", md5.Sum(encryptedConfig)), config.Hash)
+		require.Equal(t, fmt.Sprintf("%x", sha256.Sum256(encryptedConfig)), config.Hash)
 		require.False(t, config.Default)
 
 		// An error while adding auto-generated rutes should be returned.
@@ -613,7 +613,7 @@ func TestIntegrationRemoteAlertmanagerConfiguration(t *testing.T) {
 		require.NoError(t, err)
 
 		require.JSONEq(t, string(want), string(got))
-		require.Equal(t, fmt.Sprintf("%x", md5.Sum(want)), config.Hash)
+		require.Equal(t, fmt.Sprintf("%x", sha256.Sum256(want)), config.Hash)
 		require.True(t, config.Default)
 
 		// An error while adding auto-generated rutes should be returned.

@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	alertingmodels "github.com/grafana/alerting/models"
+	alertingmodels "github.com/billcchung/alerting/models"
 
 	ngfakes "github.com/grafana/grafana/pkg/services/ngalert/tests/fakes"
 

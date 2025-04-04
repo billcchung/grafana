@@ -4,8 +4,8 @@ import (
 	amv2 "github.com/prometheus/alertmanager/api/v2/models"
 	"golang.org/x/exp/maps"
 
-	alertingModels "github.com/grafana/alerting/models"
-	"github.com/grafana/alerting/notify"
+	alertingModels "github.com/billcchung/alerting/models"
+	"github.com/billcchung/alerting/notify"
 )
 
 // Silence is the model-layer representation of an alertmanager silence. Currently just a wrapper around the

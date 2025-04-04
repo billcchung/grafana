@@ -1,7 +1,7 @@
 package util
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"io"
 	"strings"
@@ -10,7 +10,7 @@ import (
 // Md5Sum calculates the md5sum of a stream
 func Md5Sum(reader io.Reader) (string, error) {
 	var returnMD5String string
-	hash := md5.New()
+	hash := sha256.New()
 	if _, err := io.Copy(hash, reader); err != nil {
 		return returnMD5String, err
 	}

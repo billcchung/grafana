@@ -2,7 +2,7 @@ package filestorage
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"reflect"
 
@@ -59,7 +59,7 @@ func createPathHash(path string) (string, error) {
 }
 
 func createContentsHash(contents []byte) string {
-	hash := md5.Sum(contents)
+	hash := sha256.Sum256(contents)
 	return hex.EncodeToString(hash[:])
 }
 

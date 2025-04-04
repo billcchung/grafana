@@ -2,7 +2,7 @@ package sql
 
 import (
 	context "context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"net/http"
@@ -35,7 +35,7 @@ func (b *backend) PutResourceBlob(ctx context.Context, req *resource.PutBlobRequ
 		}, nil
 	}
 
-	hasher := md5.New() // same as s3
+	hasher := sha256.New() // same as s3
 	_, err := hasher.Write(req.Value)
 	if err != nil {
 		return nil, err

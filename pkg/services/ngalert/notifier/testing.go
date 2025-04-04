@@ -3,7 +3,7 @@ package notifier
 import (
 	"bytes"
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"io"
@@ -18,7 +18,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/ngalert/models"
 	"github.com/grafana/grafana/pkg/services/ngalert/store"
 
-	alertingImages "github.com/grafana/alerting/images"
+	alertingImages "github.com/billcchung/alerting/images"
 )
 
 type fakeConfigStore struct {
@@ -116,7 +116,7 @@ func (f *fakeConfigStore) SaveAlertmanagerConfiguration(ctx context.Context, cmd
 func (f *fakeConfigStore) SaveAlertmanagerConfigurationWithCallback(_ context.Context, cmd *models.SaveAlertmanagerConfigurationCmd, callback store.SaveCallback) error {
 	cfg := models.AlertConfiguration{
 		AlertmanagerConfiguration: cmd.AlertmanagerConfiguration,
-		ConfigurationHash:         fmt.Sprintf("%x", md5.Sum([]byte(cmd.AlertmanagerConfiguration))),
+		ConfigurationHash:         fmt.Sprintf("%x", sha256.Sum256([]byte(cmd.AlertmanagerConfiguration))),
 		OrgID:                     cmd.OrgID,
 		ConfigurationVersion:      "v1",
 		Default:                   cmd.Default,
@@ -141,7 +141,7 @@ func (f *fakeConfigStore) UpdateAlertmanagerConfiguration(_ context.Context, cmd
 		newConfig := models.AlertConfiguration{
 			AlertmanagerConfiguration: cmd.AlertmanagerConfiguration,
 			OrgID:                     cmd.OrgID,
-			ConfigurationHash:         fmt.Sprintf("%x", md5.Sum([]byte(cmd.AlertmanagerConfiguration))),
+			ConfigurationHash:         fmt.Sprintf("%x", sha256.Sum256([]byte(cmd.AlertmanagerConfiguration))),
 			ConfigurationVersion:      "v1",
 			Default:                   cmd.Default,
 		}

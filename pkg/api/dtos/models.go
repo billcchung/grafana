@@ -1,7 +1,7 @@
 package dtos
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 	"regexp"
 	"strings"
@@ -127,7 +127,7 @@ func GetGravatarHash(text string) ([]byte, bool) {
 		return make([]byte, 0), false
 	}
 
-	hasher := md5.New()
+	hasher := sha256.New()
 	if _, err := hasher.Write([]byte(strings.ToLower(text))); err != nil {
 		mlog.Warn("Failed to hash text", "err", err)
 	}

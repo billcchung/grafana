@@ -7,8 +7,8 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/grafana/alerting/notify"
-	"github.com/grafana/alerting/receivers"
+	"github.com/billcchung/alerting/notify"
+	"github.com/billcchung/alerting/receivers"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/modern-go/reflect2"
 

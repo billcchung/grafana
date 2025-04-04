@@ -12,7 +12,7 @@ import (
 	"sort"
 	"strings"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"github.com/grafana/grafana/pkg/services/ngalert/notifier/channels_config"
 )

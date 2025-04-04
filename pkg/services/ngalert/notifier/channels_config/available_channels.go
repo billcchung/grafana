@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grafana/alerting/receivers/jira"
-	alertingMqtt "github.com/grafana/alerting/receivers/mqtt"
-	alertingOpsgenie "github.com/grafana/alerting/receivers/opsgenie"
-	alertingPagerduty "github.com/grafana/alerting/receivers/pagerduty"
-	alertingTemplates "github.com/grafana/alerting/templates"
+	"github.com/billcchung/alerting/receivers/jira"
+	alertingMqtt "github.com/billcchung/alerting/receivers/mqtt"
+	alertingOpsgenie "github.com/billcchung/alerting/receivers/opsgenie"
+	alertingPagerduty "github.com/billcchung/alerting/receivers/pagerduty"
+	alertingTemplates "github.com/billcchung/alerting/templates"
 )
 
 // GetAvailableNotifiers returns the metadata of all the notification channels that can be configured.

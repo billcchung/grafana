@@ -2,7 +2,7 @@ package fakes
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 
 	"github.com/grafana/grafana/pkg/services/ngalert/models"
@@ -37,7 +37,7 @@ func (f *FakeAlertmanagerConfigStore) GetLatestAlertmanagerConfiguration(ctx con
 
 	result := &f.Config
 	result.OrgID = orgID
-	result.ConfigurationHash = fmt.Sprintf("%x", md5.Sum([]byte(f.Config.AlertmanagerConfiguration)))
+	result.ConfigurationHash = fmt.Sprintf("%x", sha256.Sum256([]byte(f.Config.AlertmanagerConfiguration)))
 	result.ConfigurationVersion = f.Config.ConfigurationVersion
 	return result, nil
 }

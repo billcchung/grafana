@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 	"github.com/stretchr/testify/require"
 )
 

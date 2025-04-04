@@ -10,7 +10,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/registry/rest"
 
-	"github.com/grafana/alerting/templates"
+	"github.com/billcchung/alerting/templates"
 
 	model "github.com/grafana/grafana/apps/alerting/notifications/pkg/apis/resource/templategroup/v0alpha1"
 	grafanarest "github.com/grafana/grafana/pkg/apiserver/rest"

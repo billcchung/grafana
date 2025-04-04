@@ -3,9 +3,9 @@ package notifier
 import (
 	"context"
 
+	alertingCluster "github.com/billcchung/alerting/cluster"
+	alertingClusterPB "github.com/billcchung/alerting/cluster/clusterpb"
 	"github.com/gogo/protobuf/proto"
-	alertingCluster "github.com/grafana/alerting/cluster"
-	alertingClusterPB "github.com/grafana/alerting/cluster/clusterpb"
 )
 
 type RedisChannel struct {

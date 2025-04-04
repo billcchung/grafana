@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 
-	alertingHTTP "github.com/grafana/alerting/http"
+	alertingHTTP "github.com/billcchung/alerting/http"
 
 	"github.com/grafana/grafana/pkg/util"
 )

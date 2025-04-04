@@ -2,7 +2,7 @@ package remote
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -18,9 +18,9 @@ import (
 	amsilence "github.com/prometheus/alertmanager/api/v2/client/silence"
 	"github.com/prometheus/client_golang/prometheus"
 
-	alertingClusterPB "github.com/grafana/alerting/cluster/clusterpb"
-	alertingModels "github.com/grafana/alerting/models"
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingClusterPB "github.com/billcchung/alerting/cluster/clusterpb"
+	alertingModels "github.com/billcchung/alerting/models"
+	alertingNotify "github.com/billcchung/alerting/notify"
 
 	"gopkg.in/yaml.v3"
 
@@ -184,7 +184,7 @@ func NewAlertmanager(cfg AlertmanagerConfig, store stateStore, decryptFn Decrypt
 		autogenFn:         autogenFn,
 		decrypt:           decryptFn,
 		defaultConfig:     string(rawCfg),
-		defaultConfigHash: fmt.Sprintf("%x", md5.Sum(rawCfg)),
+		defaultConfigHash: fmt.Sprintf("%x", sha256.Sum256(rawCfg)),
 		log:               logger,
 		metrics:           metrics,
 		mimirClient:       mc,
@@ -278,14 +278,14 @@ func (am *Alertmanager) CompareAndSendConfiguration(ctx context.Context, config 
 	return am.sendConfiguration(ctx, decrypted, config.ConfigurationHash, config.CreatedAt, isDefault)
 }
 
-func (am *Alertmanager) isDefaultConfiguration(configHash [16]byte) (bool, error) {
+func (am *Alertmanager) isDefaultConfiguration(configHash [32]byte) (bool, error) {
 	return fmt.Sprintf("%x", configHash) == am.defaultConfigHash, nil
 }
 
 // decryptConfiguration decrypts the configuration in-place and returns the decrypted configuration alongside its hash.
 // Should not be used outside of this package and the specific use case of decrypting the configuration before sending
 // it to the remote Alertmanager.
-func (am *Alertmanager) decryptConfiguration(ctx context.Context, cfg *apimodels.PostableUserConfig) ([]byte, [16]byte, error) {
+func (am *Alertmanager) decryptConfiguration(ctx context.Context, cfg *apimodels.PostableUserConfig) ([]byte, [32]byte, error) {
 	fn := func(payload []byte) ([]byte, error) {
 		return am.decrypt(ctx, payload)
 	}
@@ -297,7 +297,7 @@ func (am *Alertmanager) decryptConfiguration(ctx context.Context, cfg *apimodels
 		for _, gmr := range rcv.PostableGrafanaReceivers.GrafanaManagedReceivers {
 			decrypted, err := gmr.DecryptSecureSettings(fn)
 			if err != nil {
-				return nil, [16]byte{}, fmt.Errorf("unable to decrypt settings on receiver %q (uid: %q): %w", gmr.Name, gmr.UID, err)
+				return nil, [32]byte{}, fmt.Errorf("unable to decrypt settings on receiver %q (uid: %q): %w", gmr.Name, gmr.UID, err)
 			}
 			gmr.SecureSettings = decrypted
 		}
@@ -305,10 +305,10 @@ func (am *Alertmanager) decryptConfiguration(ctx context.Context, cfg *apimodels
 
 	rawDecrypted, err := json.Marshal(cfg)
 	if err != nil {
-		return nil, [16]byte{}, fmt.Errorf("unable to marshal decrypted configuration: %w", err)
+		return nil, [32]byte{}, fmt.Errorf("unable to marshal decrypted configuration: %w", err)
 	}
 
-	return rawDecrypted, md5.Sum(rawDecrypted), nil
+	return rawDecrypted, sha256.Sum256(rawDecrypted), nil
 }
 
 func (am *Alertmanager) sendConfiguration(ctx context.Context, decrypted *apimodels.PostableUserConfig, hash string, createdAt int64, isDefault bool) error {
@@ -354,7 +354,7 @@ func (am *Alertmanager) SaveAndApplyConfig(ctx context.Context, cfg *apimodels.P
 	if err != nil {
 		return err
 	}
-	hash := fmt.Sprintf("%x", md5.Sum(rawCfg))
+	hash := fmt.Sprintf("%x", sha256.Sum256(rawCfg))
 
 	// Add auto-generated routes and decrypt before sending.
 	if err := am.autogenFn(ctx, am.log, am.orgID, &cfg.AlertmanagerConfig, false); err != nil {
@@ -515,7 +515,7 @@ func (am *Alertmanager) PutAlerts(ctx context.Context, alerts apimodels.Postable
 		for k, v := range a.Labels {
 			// The Grafana Alertmanager skips empty and namespace UID labels.
 			// To get the same alert fingerprint we need to remove these labels too.
-			// https://github.com/grafana/alerting/blob/2dda1c67ec02625ac9fc8607157b3d5825d47919/notify/grafana_alertmanager.go#L722-L724
+			// https://github.com/billcchung/alerting/blob/2dda1c67ec02625ac9fc8607157b3d5825d47919/notify/grafana_alertmanager.go#L722-L724
 			if len(v) == 0 || k == alertingModels.NamespaceUIDLabel {
 				delete(a.Labels, k)
 			}
@@ -659,7 +659,7 @@ func (am *Alertmanager) getFullState(ctx context.Context) (string, error) {
 
 // shouldSendConfig compares the remote Alertmanager configuration with our local one.
 // It returns true if the configurations are different.
-func (am *Alertmanager) shouldSendConfig(ctx context.Context, hash [16]byte) bool {
+func (am *Alertmanager) shouldSendConfig(ctx context.Context, hash [32]byte) bool {
 	rc, err := am.mimirClient.GetGrafanaAlertmanagerConfig(ctx)
 	if err != nil {
 		// Log the error and return true so we try to upload our config anyway.
@@ -676,7 +676,7 @@ func (am *Alertmanager) shouldSendConfig(ctx context.Context, hash [16]byte) boo
 		am.log.Error("Unable to marshal the remote Alertmanager configuration for comparison", "err", err)
 		return true
 	}
-	return md5.Sum(rawRemote) != hash
+	return sha256.Sum256(rawRemote) != hash
 }
 
 // shouldSendState compares the remote Alertmanager state with our local one.

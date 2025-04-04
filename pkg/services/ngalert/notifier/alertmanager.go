@@ -2,17 +2,17 @@ package notifier
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"strconv"
 	"time"
 
-	alertingHttp "github.com/grafana/alerting/http"
-	alertingNotify "github.com/grafana/alerting/notify"
-	"github.com/grafana/alerting/receivers"
-	alertingTemplates "github.com/grafana/alerting/templates"
+	alertingHttp "github.com/billcchung/alerting/http"
+	alertingNotify "github.com/billcchung/alerting/notify"
+	"github.com/billcchung/alerting/receivers"
+	alertingTemplates "github.com/billcchung/alerting/templates"
 	"github.com/prometheus/alertmanager/config"
 
 	amv2 "github.com/prometheus/alertmanager/api/v2/models"
@@ -337,7 +337,7 @@ func (am *alertmanager) applyConfig(cfg *apimodels.PostableUserConfig) (bool, er
 	}
 
 	// If configuration hasn't changed, we've got nothing to do.
-	configHash := md5.Sum(rawConfig)
+	configHash := sha256.Sum256(rawConfig)
 	if am.Base.ConfigHash() == configHash {
 		am.logger.Debug("Config hasn't changed, skipping configuration sync.")
 		return false, nil

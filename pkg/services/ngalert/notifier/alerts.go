@@ -3,7 +3,7 @@ package notifier
 import (
 	"context"
 
-	alertingNotify "github.com/grafana/alerting/notify"
+	alertingNotify "github.com/billcchung/alerting/notify"
 )
 
 func (am *alertmanager) GetAlerts(_ context.Context, active, silenced, inhibited bool, filter []string, receivers string) (alertingNotify.GettableAlerts, error) {

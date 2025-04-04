@@ -3,7 +3,7 @@ package notifier
 import (
 	"context"
 
-	"github.com/grafana/alerting/receivers"
+	"github.com/billcchung/alerting/receivers"
 
 	"github.com/grafana/grafana/pkg/services/notifications"
 )

@@ -6,7 +6,7 @@ import (
 	"github.com/prometheus/alertmanager/pkg/labels"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/grafana/alerting/models"
+	"github.com/billcchung/alerting/models"
 	"github.com/grafana/grafana/pkg/util"
 )
 

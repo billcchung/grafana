@@ -2,7 +2,7 @@ package api
 
 import (
 	"context"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"net/http"
@@ -171,7 +171,7 @@ func TestAlertmanagerConfig(t *testing.T) {
 		require.Equal(t, 200, getResponse.Status())
 
 		body := getResponse.Body()
-		hash := md5.Sum(body)
+		hash := sha256.Sum256(body)
 		postable, err := notifier.Load(body)
 		require.NoError(t, err)
 
@@ -181,7 +181,7 @@ func TestAlertmanagerConfig(t *testing.T) {
 		getResponse = sut.RouteGetAlertingConfig(&rc)
 		require.Equal(t, 200, getResponse.Status())
 
-		newHash := md5.Sum(getResponse.Body())
+		newHash := sha256.Sum256(getResponse.Body())
 		require.Equal(t, hash, newHash)
 	})
 

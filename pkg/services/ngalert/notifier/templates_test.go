@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	alertingModels "github.com/billcchung/alerting/models"
+	alertingNotify "github.com/billcchung/alerting/notify"
 	"github.com/go-openapi/strfmt"
-	alertingModels "github.com/grafana/alerting/models"
-	alertingNotify "github.com/grafana/alerting/notify"
 	amv2 "github.com/prometheus/alertmanager/api/v2/models"
 	prometheusModel "github.com/prometheus/common/model"
 	"github.com/stretchr/testify/assert"

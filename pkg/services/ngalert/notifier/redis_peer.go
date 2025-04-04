@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
+	alertingCluster "github.com/billcchung/alerting/cluster"
+	alertingClusterPB "github.com/billcchung/alerting/cluster/clusterpb"
 	"github.com/gogo/protobuf/proto"
 	"github.com/google/uuid"
-	alertingCluster "github.com/grafana/alerting/cluster"
-	alertingClusterPB "github.com/grafana/alerting/cluster/clusterpb"
 	dstls "github.com/grafana/dskit/crypto/tls"
 	"github.com/prometheus/client_golang/prometheus"
 
